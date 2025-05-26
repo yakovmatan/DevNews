@@ -14,7 +14,7 @@ namespace DevNews
             var fetcher = new FetchRecentPosts();
 
 
-            string answer = await fetcher.HttpRequest();
+            string answer = await fetcher.HttpGet();
 
 
             var posts = fetcher.FromStringToJson(answer);
@@ -60,6 +60,9 @@ namespace DevNews
             objPosts.title = "my name is yakov";
             objPosts.body = "it's great";
             await fetcher.HttpPost(objPosts);
+
+            // Exercise 4
+            await fetcher.httpPut();
             
             
 
