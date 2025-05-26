@@ -10,27 +10,34 @@ public class FetchRecentPosts
     private HttpClient Client = new HttpClient();
     public string url { get; set; }
 
-    public string answer { get; private set; }
 
     public FetchRecentPosts()
     {
         this.url = "https://jsonplaceholder.typicode.com/posts";
     }
 
-    public async Task HttpRequest()
+    public async Task<string> HttpRequest()
     {
         var response = await this.Client.GetAsync(this.url);
-        this.answer = await response.Content.ReadAsStringAsync();
+        string answer = await response.Content.ReadAsStringAsync();
+        return answer;
+
     }
 
-    public Posts[] FromStringToJson()
+    public Posts[] FromStringToJson(string answer)
     {
-        if (string.IsNullOrEmpty(this.answer))
-            throw new InvalidOperationException("Must call HttpRequest() before parsing.");
+        try
+        {
+            Posts[] posts = JsonSerializer.Deserialize<Posts[]>(answer);
+            return posts;
+        }
+        catch (JsonException ex)
+        {
+            Console.WriteLine($"Error concerting Jason: {ex.Message}");
+            return Array.Empty<Posts>();
+        }
 
-        Posts[] posts = JsonSerializer.Deserialize<Posts[]>(this.answer);
-        return posts;
-        
+
     }
 
 
