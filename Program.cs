@@ -32,7 +32,7 @@ namespace DevNews
                 Console.WriteLine("enter a number between 1 and 100");
                 string input = Console.ReadLine();
 
-                if (int.TryParse(input,out number))
+                if (int.TryParse(input, out number))
                 {
                     break;
                 }
@@ -43,17 +43,25 @@ namespace DevNews
             {
                 if (post.id == number)
                 {
-                    Console.WriteLine(post.title,post.body);
+                    Console.WriteLine(post.title, post.body);
                     flag = true;
                     break;
                 }
-                
+
             }
             if (!flag)
             {
                 Console.WriteLine("The ID you entered was not found.");
             }
-
+            // Exercise 3
+            Posts objPosts = new Posts();
+            objPosts.userId = 11;
+            objPosts.id = 101;
+            objPosts.title = "my name is yakov";
+            objPosts.body = "it's great";
+            await fetcher.HttpPost(objPosts);
+            
+            
 
 
         }

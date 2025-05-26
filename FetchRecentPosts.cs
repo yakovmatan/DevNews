@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using static System.Net.WebRequestMethods;
 using System.Text.Json;
 using System;
+using System.Text;
 
 public class FetchRecentPosts
 {
@@ -24,6 +25,14 @@ public class FetchRecentPosts
 
     }
 
+    public async Task HttpPost(object obj)
+    {
+        var json = JsonSerializer.Serialize(obj);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+        var response = await Client.PostAsync("https://jsonplaceholder.typicode.com/posts", content);
+        Console.WriteLine(response.StatusCode);
+    }
+
     public Posts[] FromStringToJson(string answer)
     {
         try
@@ -39,6 +48,8 @@ public class FetchRecentPosts
 
 
     }
+
+
 
 
 }
